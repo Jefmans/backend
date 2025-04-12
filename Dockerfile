@@ -9,7 +9,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Make the Vault wait script executable
-RUN chmod +x wait-for-vault.sh
+RUN chmod +x wait_for_vault.sh
 
 ENTRYPOINT ["./wait-for-vault.sh"]
 
