@@ -23,8 +23,9 @@ def search_test_data():
             index="my-index",
             query={"match_all": {}}
         )
-        hits = response["hits"]["hits"]
-        return [{"id": hit["_id"], "data": hit["_source"]} for hit in hits]
+        # hits = response["hits"]["hits"]
+        # return [{"id": hit["_id"], "data": hit["_source"]} for hit in hits]
+        return response
     except Exception as e:
         return {"status": "error", "detail": str(e)}
 
