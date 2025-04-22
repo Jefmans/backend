@@ -18,26 +18,23 @@ def search(q: str = Query(..., description="Search term")):
 
 @router.get("/search/2")
 def search_test_data():
-    response = es.search(
-        index="my-index",
-        query={"match_all": {}}
-    )
-    hits = response["hits"]["hits"]
-    return [{"id": hit["_id"], "data": hit["_source"]} for hit in hits]
-
-
-
+    try:
+        response = es.search(
+            index="my-index",
+            query={"match_all": {}}
+        )
+        hits = response["hits"]["hits"]
+        return [{"id": hit["_id"], "data": hit["_source"]} for hit in hits]
+    except Exception as e:
+        return {"status": "error", "detail": str(e)}
 
 @router.get("/search/3")
-def search_test_data():
+def search(q: str = Query(None, description="Search term")):
+    if not q:
+        return {"detail": "Missing search query"}
+    
     response = es.search(
         index="my-index",
-        body={
-            "query": {
-                "match_all": {}
-            }
-        },
-        headers={"Content-Type": "application/json"}
+        query={"match": {"content": q}}
     )
-    hits = response["hits"]["hits"]
-    return [{"id": hit["_id"], "data": hit["_source"]} for hit in hits]
+    return response["hits"]
