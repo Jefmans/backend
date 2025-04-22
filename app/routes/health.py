@@ -30,3 +30,21 @@ def elasticsearch_health():
         }
     except Exception as e:
         return {"status": "error", "detail": str(e)}
+    
+
+@router.get("/es-health/3")
+def elasticsearch_health():
+    try:
+        # Use raw HTTP call to completely bypass elasticsearch-py quirks
+        res = requests.get("http://elasticsearch:9200/", headers={
+            "Accept": "application/json"
+        })
+        res.raise_for_status()
+        data = res.json()
+        return {
+            "status": "ok",
+            "version": data["version"]["number"],
+            "cluster_name": data["cluster_name"]
+        }
+    except Exception as e:
+        return {"status": "error", "detail": str(e)}    
