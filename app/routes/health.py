@@ -49,3 +49,12 @@ def elasticsearch_health():
         }
     except Exception as e:
         return {"status": "error", "detail": str(e)}    
+    
+
+
+@router.get("/get-doc")
+def get_doc():
+    res = es.get(index="my_index", id="5AJAXpYByB_MKUpXsWis")
+    
+
+    return res
