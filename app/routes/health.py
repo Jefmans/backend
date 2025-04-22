@@ -1,11 +1,20 @@
-from fastapi import APIRouter
+
+from fastapi import APIRouter, Query
 from elasticsearch import Elasticsearch
 
 router = APIRouter()
-
 es = Elasticsearch("http://elasticsearch:9200")
 
-@router.get("/es-health")
+@router.get("/es-health/1")
+def elasticsearch_health():
+    try:
+        es_info = es.info()
+        return {"status": "ok", "version": es_info["version"]["number"]}
+    except Exception as e:
+        return {"status": "error", "detail": str(e)}
+
+
+@router.get("/es-health/2")
 def elasticsearch_health():
     try:
         # use perform_request to bypass client validation
