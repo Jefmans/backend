@@ -6,9 +6,15 @@ import os
 router = APIRouter()
 
 # es = Elasticsearch("http://elasticsearch:9200")
-# es = Elasticsearch("http://65.109.3.143:9200")
+es = Elasticsearch(
+    "http://65.109.3.143:9200",
+    headers={
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    }
+)
 
-es = Elasticsearch(os.getenv("ES_HOST", "http://elasticsearch:9200"))
+# es = Elasticsearch(os.getenv("ES_HOST", "http://elasticsearch:9200"))
 
 
 @router.get("/search/1")
