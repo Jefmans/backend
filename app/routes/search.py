@@ -77,6 +77,9 @@ def quick_search():
 
 @router.get("/info")
 def get_info():
-    res = es.info()
+    response = es.search(
+    index="my-index",
+    query={"match": {'age': {'query':'30'}}}
+    )
 
-    return res
+    return response
