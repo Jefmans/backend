@@ -57,8 +57,6 @@ def es_debug():
         return {"status": "error", "detail": str(e)}
 
 
-import requests
-
 @router.get("/search/quick")
 def quick_search():
     try:
@@ -69,3 +67,16 @@ def quick_search():
         return res.json()
     except Exception as e:
         return {"status": "error", "detail": str(e)}
+
+
+# @router.get("/my-test")
+# def test_search():
+#     es.search(index="my-index", query={"match": {"foo": {"query": "foo"}}})
+
+#     return "test"
+
+@router.get("/info")
+def get_info():
+    res = es.info()
+
+    return res
