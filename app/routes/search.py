@@ -16,11 +16,28 @@ es = Elasticsearch("http://elasticsearch:9200")
 #     return response["hits"]
 
 
+# @router.get("/search")
+# def search_test_data():
+#     response = es.search(
+#         index="my-index",
+#         query={"match_all": {}}
+#     )
+#     hits = response["hits"]["hits"]
+#     return [{"id": hit["_id"], "data": hit["_source"]} for hit in hits]
+
+
+
+
 @router.get("/search")
 def search_test_data():
     response = es.search(
         index="my-index",
-        query={"match_all": {}}
+        body={
+            "query": {
+                "match_all": {}
+            }
+        },
+        headers={"Content-Type": "application/json"}
     )
     hits = response["hits"]["hits"]
     return [{"id": hit["_id"], "data": hit["_source"]} for hit in hits]
