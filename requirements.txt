@@ -1,5 +1,5 @@
 fastapi
 uvicorn
 gunicorn
-elasticsearch >=8.12.1
+elasticsearch >=9.0.0
 requests

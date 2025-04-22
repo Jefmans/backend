@@ -2,6 +2,7 @@
 
 from fastapi import APIRouter, Query
 from elasticsearch import Elasticsearch
+import requests
 
 router = APIRouter()
 
@@ -41,3 +42,30 @@ def search(q: str = Query(None, description="Search term")):
         query={"match": {"content": q}}
     )
     return response["hits"]
+
+
+@router.get("/es-debug")
+def es_debug():
+    try:
+        response = es.perform_request(
+            method="GET",
+            path="/",
+            headers={"Accept": "application/json"}
+        )
+        return response
+    except Exception as e:
+        return {"status": "error", "detail": str(e)}
+
+
+import requests
+
+@router.get("/search/quick")
+def quick_search():
+    try:
+        query = {"query": {"match_all": {}}}
+        res = requests.post("http://65.109.3.143:9200/my-index/_search",
+                            headers={"Content-Type": "application/json"},
+                            json=query)
+        return res.json()
+    except Exception as e:
+        return {"status": "error", "detail": str(e)}
