@@ -54,7 +54,7 @@ def elasticsearch_health():
 
 @router.get("/get-doc")
 def get_doc():
-    res = es.get(index="my_index", id="5AJAXpYByB_MKUpXsWis")
+    res = es.get(index="my-index", id="5AJAXpYByB_MKUpXsWis")
     
 
     return res
