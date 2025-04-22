@@ -7,10 +7,20 @@ router = APIRouter()
 
 es = Elasticsearch("http://elasticsearch:9200")
 
+# @router.get("/search")
+# def search(q: str = Query(..., description="Search term")):
+#     response = es.search(
+#         index="your-index-name",
+#         query={"match": {"content": q}}
+#     )
+#     return response["hits"]
+
+
 @router.get("/search")
-def search(q: str = Query(..., description="Search term")):
+def search_test_data():
     response = es.search(
-        index="your-index-name",
-        query={"match": {"content": q}}
+        index="my-index",
+        query={"match_all": {}}
     )
-    return response["hits"]
+    hits = response["hits"]["hits"]
+    return [{"id": hit["_id"], "data": hit["_source"]} for hit in hits]
