@@ -1,6 +1,7 @@
-
 from fastapi import APIRouter, Query
 from elasticsearch import Elasticsearch
+import requests
+
 
 router = APIRouter()
 es = Elasticsearch("http://elasticsearch:9200")
