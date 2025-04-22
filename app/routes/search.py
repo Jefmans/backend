@@ -84,3 +84,9 @@ def get_info():
     )
 
     return response
+
+@router.get("/test")
+def get_info():
+    
+
+    return {'test':'test'}
